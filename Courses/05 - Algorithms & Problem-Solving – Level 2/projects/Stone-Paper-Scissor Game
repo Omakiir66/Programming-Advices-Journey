@@ -43,7 +43,7 @@ short ReadNumberOfRounds() {
 
 enGameChoices ReadPlayerChoice() {
 	short Playerchoice;
-	cout << "Your choice: [1]:Stone, [2]:Paper, [3]:Scissors ? ";
+	cout << "\n\nYour choice: [1]:Stone, [2]:Paper, [3]:Scissors ? ";
 	cin >> Playerchoice;
 	return enGameChoices(Playerchoice);
 }
@@ -53,20 +53,27 @@ enGameChoices GetComputerChoice() {
 }
 
 enWinner WhoWinTheRound(stRoundInfo RoundInfo){
-	if (RoundInfo.ComputerChoice == RoundInfo.Player1Choice)
+	if (RoundInfo.ComputerChoice == RoundInfo.Player1Choice) {
+		system("color 6F");
 		return enWinner::Draw;
+	}
+		
 
 	switch (RoundInfo.Player1Choice)
 	{
 
 	case enGameChoices::Stone:
 		if (RoundInfo.ComputerChoice == enGameChoices::Paper) {
+			cout << "\a";
+			system("color 4F");
 			return enWinner::Computer;
 		}
 		break;
 
 	case enGameChoices::Paper:
 		if (RoundInfo.ComputerChoice == enGameChoices::Scissor) {
+			cout << "\a";
+			system("color 4F");
 			return enWinner::Computer;
 		}
 		break;
@@ -74,10 +81,13 @@ enWinner WhoWinTheRound(stRoundInfo RoundInfo){
 
 	case enGameChoices::Scissor:
 		if (RoundInfo.ComputerChoice == enGameChoices::Stone) {
+			cout << "\a";
+			system("color 4F");
 			return enWinner::Computer;
 		}
 		break;
 	}
+	system("color 2F");
 	return enWinner::Player;
 		
 }
@@ -130,7 +140,7 @@ void ShowGameOverScreen() {
 void PrintFinalResults(stGameResults GameResults) {
 	cout << tabs(2) << "_________________________[Game Results]_____________________________\n";
 	cout << tabs(2) << "Game Rounds        :" << GameResults.GameRounds << endl;
-	cout << tabs(2) << "Player1 won times  :" << GameResults.ComputerWonTimes << endl;
+	cout << tabs(2) << "Player1 won times  :" << GameResults.Player1WonTimes << endl;
 	cout << tabs(2) << "Computer won times :" << GameResults.ComputerWonTimes << endl;
 	cout << tabs(2) << "Draw times         :" << GameResults.DrawTimes << endl;
 	cout << tabs(2) << "Final Winner       :" << GameResults.FinalWinnerName << endl;
@@ -163,12 +173,12 @@ stGameResults PlayGame(short NumberOfRounds) {
 		RoundInfo.Winner = WhoWinTheRound(RoundInfo);
 		RoundInfo.WinnerName = WinnerName(RoundInfo.Winner);
 
-		if (RoundInfo.WinnerName == "Player")
+		if (RoundInfo.Winner == enWinner:: Player)
 			Player1WinTimes++;
-		else if (RoundInfo.WinnerName == "Computer")
+		else if (RoundInfo.Winner == enWinner::Computer)
 			ComputerWinTimes++;
 		else
-			DrawTimes;
+			DrawTimes++ ;
 
 		PrintRoundResults(RoundInfo);
 	}
