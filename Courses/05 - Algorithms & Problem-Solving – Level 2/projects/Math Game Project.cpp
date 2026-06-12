@@ -215,6 +215,11 @@ void AskAndCorrectQuestionListAnswers(stQuizz& Quizz) {
 
 }
 
+bool CompareAnswers(stQuizz Quizz) {
+	Quizz.IsPass = (Quizz.NumberOfCorrectAnswers > Quizz.NumberOfWrongAnswers ? true : false);
+	return Quizz.IsPass;
+}
+
 string GetFinalResultText(bool IsPass) {
 
 	if (IsPass)
@@ -237,7 +242,7 @@ string GetOpTypeText(enOpType OpType) {
 }
 void PrintQuizzResult(stQuizz Quizz) {
 	cout << "__________________________________________\n\n";
-	cout << "Final Result is " << GetFinalResultText(Quizz.IsPass) << endl;
+	cout << "Final Result is " << GetFinalResultText(CompareAnswers(Quizz)) << endl;
 	cout << "__________________________________________\n\n";
 	cout << "Number of questions: " << Quizz.NumberOfQuestions << endl;
 	cout << "Questions Level    : " << GetQuestionLevelText(Quizz.QuestionsLevel) << endl;
